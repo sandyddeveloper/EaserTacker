@@ -9,64 +9,68 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="../css/chatbot.css">
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=logout" />
     <link rel="icon" href="https://discordbanners.vercel.app/static/img/logo.svg" type="image/svg+xml">
-    <style>
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .light-mode {
-            background: #ffffff;
-            color: #4c1d95;
-        }
-
-        .dark-mode {
-            background: #1a1a2e;
-            color: #e0e0e0;
-        }
-
-        .topbar-light {
-            background: #ffffff !important;
-            color: #4c1d95;
-        }
-
-        .topbar-dark {
-            background: #1a1a2e !important;
-            color: #e0e0e0;
-        }
-    </style>
 </head>
 
 <body class="transition-colors duration-300">
     <div class="flex h-screen flex-col">
         <!-- Topbar -->
         <header id="topbar"
-            class="w-full bg-white dark:bg-gray-900 bg-opacity-10 backdrop-blur-lg shadow-md p-4 flex justify-between items-center glass-effect">
+            class="w-full bg-white dark:bg-gray-900 bg-opacity-10 backdrop-blur-lg shadow-md p-4 flex justify-between items-center glass-effect top-0 left-0 right-0 z-50">
             <div class="flex items-center gap-4">
-                <h1 class="text-2xl font-bold flex items-center gap-2">
-                    <img src="https://discordbanners.vercel.app/static/img/logo.svg" alt="logo"> Bug Tracker
-                </h1>
+                <div class="flex items-center gap-2">
+                    <img src="https://discordbanners.vercel.app/static/img/logo.svg" alt="logo"
+                        class="w-8 h-8 sm:w-10 sm:h-10">
+                    <span class="text-2xl font-bold hidden sm:inline-block">EaserTacker</span>
+                </div>
             </div>
 
             <div class="flex items-center gap-4">
                 <!-- Chatbot Button -->
                 <button id="botButton"
-                    class="p-2 bg-indigo-600 text-white rounded-full shadow hover:bg-indigo-700"><i class="ph ph-robot font-bold"></i></button>
+                    class="p-2 bg-indigo-600 text-white rounded-full shadow hover:bg-indigo-700 hidden sm:flex"><i
+                        class="ph ph-robot font-bold hidden sm:flex"></i></button>
 
 
                 <!-- Voice Command -->
-                <button class="p-2 bg-gray-300 dark:bg-gray-700 rounded-full shadow">🎙️</button>
+                <button class="p-2 bg-gray-300 dark:bg-gray-700 rounded-full shadow hidden sm:flex">🎙️</button>
 
                 <!-- Date & Time Widget -->
-                <span id="datetime" class="text-gray-600 dark:text-white"></span>
+                <span id="datetime" class="text-gray-600 dark:text-white hidden sm:flex"></span>
 
                 <!-- Notifications -->
-                <div class="relative">
-                    <button class="p-2 bg-red-500 text-white rounded-full shadow">🔔</button>
-                    <div class="absolute top-12 right-0 bg-white dark:bg-gray-800 shadow-md p-4 hidden">No new
-                        notifications</div>
+                <div class="relative hidden sm:flex">
+                    <!-- Notification Button -->
+                    <button id="notificationButton" class="p-2 bg-red-500 text-white rounded-full shadow focus:outline-none">
+                        🔔
+                    </button>
+                
+                    <!-- Notification Dropdown -->
+                    <div id="notificationDropdown"
+                        class="absolute top-12 right-0 w-72 bg-white dark:bg-gray-900 shadow-lg rounded-md p-4 hidden z-50">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Notifications</h3>
+                
+                        <ul class="divide-y divide-gray-200 dark:divide-gray-600">
+                            <li class="p-2 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                                <span class="text-green-500">✔</span>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">Your bug report was resolved!</p>
+                            </li>
+                            <li class="p-2 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                                <span class="text-blue-500">📩</span>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">New comment on your issue.</p>
+                            </li>
+                            <li class="p-2 flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                                <span class="text-yellow-500">⚠</span>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">Server downtime alert!</p>
+                            </li>
+                        </ul>
+                
+                        <!-- View All Button -->
+                        <div class="mt-2">
+                            <button class="w-full text-center text-blue-500 hover:underline text-sm">View all notifications</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Dark Mode Toggle -->
@@ -89,83 +93,62 @@
 
         <div class="flex flex-1">
             <!-- Sidebar -->
-            <aside class="relative w-64 p-5 space-y-6 flex flex-col justify-between glass-effect">
-                <div>
-                    <nav>
-                        <ul class="space-y-4">
-                            <li><a href="#"
-                                    class="flex items-center gap-2 py-2 px-4 rounded hover:bg-purple-200  transition"><i
-                                        class="ph ph-chart-bar"></i> Dashboard</a></li>
-                            <li><a href="#"
-                                    class="flex items-center gap-2 py-2 px-4 rounded hover:bg-purple-200  transition"><i
-                                        class="ph ph-list"></i> Bugs</a></li>
-                            <li><a href="#"
-                                    class="flex items-center gap-2 py-2 px-4 rounded hover:bg-purple-200  transition"><i
-                                        class="ph ph-clipboard-text"></i> Reports</a></li>
-                            <li><a href="#"
-                                    class="flex items-center gap-2 py-2 px-4 rounded hover:bg-purple-200  transition"><i
-                                        class="ph ph-gear"></i> Settings</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                    
-                        <div style="transform: none;">
-                            <a href="../pages/signin.html">
-                                <button
-                                    class="relative inline-block p-px font-semibold leading-6 text-white no-underline bg-gray-800 shadow-2xl cursor-pointer group rounded-xl shadow-zinc-900"><span
-                                        class="absolute inset-0 overflow-hidden rounded-xl"><span
-                                            class="absolute inset-0 rounded-xl bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    
-                                        </span>
-                                    </span>
-                                    <div
-                                        class="relative z-10 flex items-center px-6 py-3 space-x-2 rounded-xl bg-gray-950/50 ring-1 ring-white/10 ">
-                                        <span>Logout</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                                            data-slot="icon" class="w-6 h-6">
-                                            <path fill-rule="evenodd"
-                                                d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                    </div>
-                                    <span
-                                        class="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-gray-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
-                                </button>
-                            </a>
-                        </div>
-                   
+            <aside
+                class="w-16 md:w-64 p-5 space-y-6 flex flex-col justify-between glass-effect fixed md:relative h-full transition-all duration-300">
+                <nav>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="flex items-center gap-2 p-2 rounded hover:bg-purple-200 transition"><i
+                                    class="ph ph-chart-bar"></i> <span class="hidden md:inline">Dashboard</span></a>
+                        </li>
+                        <li><a href="#" class="flex items-center gap-2 p-2 rounded hover:bg-purple-200 transition"><i
+                                    class="ph ph-list"></i> <span class="hidden md:inline">Bugs</span></a></li>
+                        <li><a href="#" class="flex items-center gap-2 p-2 rounded hover:bg-purple-200 transition"><i
+                                    class="ph ph-clipboard-text"></i> <span class="hidden md:inline">Reports</span></a>
+                        </li>
+                        <li><a href="#" class="flex items-center gap-2 p-2 rounded hover:bg-purple-200 transition"><i
+                                    class="ph ph-gear"></i> <span class="hidden md:inline">Settings</span></a></li>
+                    </ul>
+                </nav>
+                <a href="../pages/signin.html">
+                    <button class="relative flex items-center justify-center gap-2 p-2 dark:bg-red-500 text-white bg-gray-800 hover:bg-gray-700 
+                    shadow-xl rounded-xl w-full transition-all duration-200 ease-in-out">
+                    <span class="material-symbols-outlined">
+                        logout
+                        </span>
+                    <span>Logout</span>
+                </button>
+                </a>
             </aside>
 
             <!-- Main Content -->
-            <main class="flex-1 p-6">
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="p-5 glass-effect flex items-center gap-4 rounded-3xl">
-                        <i class="ph ph-warning text-red-500 text-3xl"></i>
+            <main class="flex-1 p-4 md:p-6 pl-[75px] transition-all duration-300 ">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    <div class="p-4 md:p-5 glass-effect flex items-center gap-4 rounded-xl">
+                        <i class="ph ph-warning text-red-500 text-2xl md:text-3xl"></i>
                         <div>
-                            <h3 class="text-lg font-semibold">Open Bugs</h3>
-                            <p class="text-2xl font-bold text-red-400" id="openBugs">12</p>
+                            <h3 class="text-sm md:text-lg font-semibold">Open Bugs</h3>
+                            <p class="text-lg md:text-2xl font-bold text-red-400" id="openBugs">12</p>
                         </div>
                     </div>
-                    <div class="p-5 glass-effect flex items-center gap-4 rounded-3xl">
-                        <i class="ph ph-spinner text-yellow-500 text-3xl"></i>
+                    <div class="p-4 md:p-5 glass-effect flex items-center gap-4 rounded-xl">
+                        <i class="ph ph-spinner text-yellow-500 text-2xl md:text-3xl"></i>
                         <div>
-                            <h3 class="text-lg font-semibold">In Progress</h3>
-                            <p class="text-2xl font-bold text-yellow-400" id="inProgressBugs">5</p>
+                            <h3 class="text-sm md:text-lg font-semibold">In Progress</h3>
+                            <p class="text-lg md:text-2xl font-bold text-yellow-400" id="inProgressBugs">5</p>
                         </div>
                     </div>
-                    <div class="p-5 glass-effect flex items-center gap-4 rounded-3xl">
-                        <i class="ph ph-check-circle text-green-500 text-3xl"></i>
+                    <div class="p-4 md:p-5 glass-effect flex items-center gap-4 rounded-xl">
+                        <i class="ph ph-check-circle text-green-500 text-2xl md:text-3xl"></i>
                         <div>
-                            <h3 class="text-lg font-semibold">Resolved</h3>
-                            <p class="text-2xl font-bold text-green-400" id="resolvedBugs">20</p>
+                            <h3 class="text-sm md:text-lg font-semibold">Resolved</h3>
+                            <p class="text-lg md:text-2xl font-bold text-green-400" id="resolvedBugs">20</p>
                         </div>
                     </div>
-                    <div class="p-5 glass-effect flex items-center gap-4 rounded-3xl">
-                        <i class="ph ph-lock text-gray-400 text-3xl"></i>
+                    <div class="p-4 md:p-5 glass-effect flex items-center gap-4 rounded-xl">
+                        <i class="ph ph-lock text-gray-400 text-2xl md:text-3xl"></i>
                         <div>
-                            <h3 class="text-lg font-semibold">Closed</h3>
-                            <p class="text-2xl font-bold text-gray-400" id="closedBugs">50</p>
+                            <h3 class="text-sm md:text-lg font-semibold">Closed</h3>
+                            <p class="text-lg md:text-2xl font-bold text-gray-400" id="closedBugs">50</p>
                         </div>
                     </div>
                 </div>
@@ -188,6 +171,7 @@
     </div>
     <script src="../js/toggle.js"></script>
     <script src="../js/chatbot.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 
 </html>
