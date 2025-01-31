@@ -20,19 +20,3 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-const notificationButton = document.getElementById("notificationButton");
-const notificationDropdown = document.getElementById("notificationDropdown");
-
-notificationButton.addEventListener("click", () => {
-  notificationDropdown.classList.toggle("hidden");
-});
-
-// Close when clicking outside
-document.addEventListener("click", (event) => {
-  if (
-    !notificationButton.contains(event.target) &&
-    !notificationDropdown.contains(event.target)
-  ) {
-    notificationDropdown.classList.add("hidden");
-  }
-});
