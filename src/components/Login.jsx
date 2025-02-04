@@ -18,7 +18,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error before new request
+    setError(""); 
     setIsLoading(true);
     
     const { email, password } = logindata;
@@ -150,7 +150,7 @@ const Login = () => {
 
         <p className="mt-10 text-center text-sm/6 text-gray-500">
           Didn't have an account?{' '}
-          <a href="./signup.html" className="font-semibold text-indigo-600 hover:text-indigo-500">
+          <a href="/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
             Sign up.
           </a>
         </p>
