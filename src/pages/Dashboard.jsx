@@ -19,14 +19,18 @@ const Dashboard = () => {
 
   const getSomeData = async () => {
     try {
-      const resp = await axiosInstance.get("/auth/profile/")
+      console.log("📡 Sending Request to /auth/profile/");
+      console.log("🔍 Authorization Header:", axiosInstance.defaults.headers.common["Authorization"]);
+  
+      const resp = await axiosInstance.get("/auth/profile/");
+  
       if (resp.status === 200) {
-        console.log(resp.data)
+        console.log("✅ Response Data:", resp.data);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("❌ Error fetching data:", error.response ? error.response.data : error.message);
     }
-  }
+  };
   
 
   return (
