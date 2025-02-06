@@ -8,10 +8,8 @@ const Header = () => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [time, setTime] = useState(new Date().toLocaleTimeString());
-  const username = "John Doe";
-  const role = "Admin";
-  const email = "johndoe@example.com";
-
+  const user = JSON.parse(localStorage.getItem('user'))
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date().toLocaleTimeString());
@@ -34,11 +32,14 @@ const Header = () => {
     </div>
 
     <div className="flex items-center space-x-4">
+    <button className="hidden md:flex items-center space-x-4">
+        <Bot />
+      </button>
       
       {/* Timer and Username - Hidden on Mobile */}
       <div className="hidden md:flex items-center space-x-4">
         <span className="text-sm font-semibold">{time}</span>
-        <span className="text-sm font-semibold">{username}</span>
+        <span className="text-sm font-semibold">{user.names}</span>
       </div>
 
       {/* Notification - Hidden on Mobile */}
@@ -82,9 +83,8 @@ const Header = () => {
       className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-2"
     >
       <div className="p-3 border-b dark:border-gray-700">
-        <p className="text-sm font-semibold">{username}</p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">{role}</p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">{email}</p>
+        <p className="text-sm font-semibold">{user.names}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
       </div>
       <a
         href="#"

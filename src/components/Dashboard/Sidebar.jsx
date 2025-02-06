@@ -1,9 +1,24 @@
 import { useState, useEffect } from "react";
 import { Home, FileText, CreditCard, PieChart, Square, Layers, Table, Menu, X, LogOut } from "lucide-react";
+import axiosInstance from "../../utils/Store";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const toggleSidebar = () => setIsOpen(!isOpen);
+  const navigate = useNavigate()
+  const handleLogout = async() => {
+    const res = await axiosInstance.post("/auth/logout/", {"refresh_token": refresh_token})
+    if (res.status === 200) {
+      localStorage.removeItem("access_token")
+      localStorage.removeItem("refresh_token")
+      localStorage.removeItem("user")
+      navigate("/login")
+      toast.success("Logged out successfully!")
+    }
+  }
+
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -45,7 +60,7 @@ const Sidebar = () => {
 
   
     <div className="p-4 mt-auto">
-      <button className="w-full flex items-center justify-center gap-2 p-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300">
+      <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 p-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300">
         <LogOut className="w-5 h-5 flex-shrink-0" />
         {isOpen && <span>Logout</span>}
       </button>
