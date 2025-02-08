@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SubFooter from './SubFooter';
+import SubFooter from '../SubFooter';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -7,11 +7,12 @@ import { toast } from 'react-toastify';
 const Signup = () => {
   const navigate = useNavigate();
   const [formdata, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    password_confirm: '',
+    first_name: "",
+    last_name: "",
+    email: "",
+    role:"",
+    password: "",
+    password_confirm: "",
   });
 
   const [error, setError] = useState("");
@@ -20,7 +21,7 @@ const Signup = () => {
     setFormData({ ...formdata, [e.target.name]: e.target.value });
   };
 
-  const { email, first_name, last_name, password, password_confirm } = formdata;
+  const { email, first_name, last_name, password, password_confirm, role } = formdata;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +31,7 @@ const Signup = () => {
       setError("Fill in all details");
       return;
     }
-    
+
     if (password !== password_confirm) {
       setError("Passwords do not match");
       return;
@@ -38,16 +39,32 @@ const Signup = () => {
 
     try {
       const res = await axios.post("http://localhost:8000/api/v1/auth/register/", formdata);
-      
+    
+      console.log("Server Response:", res.data); // 🔹 Check API response
+    
       if (res.status === 201) {
+        const { user, access_token, refresh_token } = res.data;
+    
+        if (!user || !access_token || !refresh_token) {
+          console.error("🔴 Missing authentication data in response:", res.data);
+          toast.error("Invalid response from server.");
+          return;
+        }
+    
+        // ✅ Store tokens only if they exist
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("access_token", access_token);
+        localStorage.setItem("refresh_token", refresh_token);
+    
         toast.success("Account created successfully! Verify your email.");
-        navigate('/otp/verify');
+        navigate("/otp/verify");
       }
     } catch (err) {
+      console.error("🔴 Signup error:", err.response?.data || err);
       setError(err.response?.data?.error || "Something went wrong. Try again.");
       toast.error("Signup failed!");
     }
-  };
+  }     
 
   return (
     <div className="h-full">
@@ -115,6 +132,20 @@ const Signup = () => {
                 className="mt-1 block w-full rounded-md px-3 py-1.5 text-gray-900 border border-gray-300 focus:border-indigo-600"
                 required
               />
+            </div>
+            <div>
+              <select
+                name="role"
+                id="role"
+                value={role}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md px-3 py-1.5 text-gray-900 border border-gray-300 focus:border-indigo-600"
+                required
+              >
+                <option value="">Select Role</option>
+                <option value="developer">Developer</option>
+                <option value="tester">Tester</option>
+              </select>
             </div>
 
             <div>

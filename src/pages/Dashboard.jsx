@@ -1,37 +1,35 @@
-import { useNavigate } from "react-router-dom";
 import { Sidebar, Header, Ads, StatsCards, ErrorTable } from "../components/Dashboard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../utils/Store";
-
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const navigate = useNavigate()
-  const user = JSON.parse(localStorage.getItem('user'))
-  const jwt_access = JSON.parse(localStorage.getItem('access_token'))
+  
+  const navigate = useNavigate();
+
+  // Safe retrieval from localStorage
+  const userData = localStorage.getItem("user");
+  const user = userData ? JSON.parse(userData) : null;
+  const jwt_access = localStorage.getItem("access_token");
+  
 
   useEffect(() => {
-    if (!jwt_access ||!user) {
-      navigate('/login')
-    }else {
-      getSomeData()
+    if (!jwt_access || !user) {
+      console.warn("🔴 No authentication data found. Redirecting to login.");
+      navigate("/login");
+    } else {
+      getSomeDate()
     }
-  }, [jwt_access, user])
+  }, [jwt_access, user]);
+  
 
-  const getSomeData = async () => {
-    try {
-      console.log("📡 Sending Request to /auth/profile/");
-      console.log("🔍 Authorization Header:", axiosInstance.defaults.headers.common["Authorization"]);
-  
-      const resp = await axiosInstance.get("/auth/profile/");
-  
-      if (resp.status === 200) {
-        console.log("✅ Response Data:", resp.data);
-      }
-    } catch (error) {
-      console.error("❌ Error fetching data:", error.response ? error.response.data : error.message);
+
+  const getSomeDate = async () => {
+    const resp = await axiosInstance.get("/auth/profile/")
+    if (resp.status === 200) {
+      console.log(resp.data)
     }
-  };
-  
+  }
 
   return (
     <div className="flex h-screen overflow-hidden">

@@ -1,18 +1,19 @@
 import React from 'react'
-import { Navbar, HeroSection, AboutUs, Features, Companies, Prices, CallToAction, Footer} from '../components'
+import { Navbar, HeroSection, AboutUs, Features, Prices, CallToAction, Footer,  Newsletter, Team} from '../components'
 
 
 const LandingPage = () => {
   return (
     <>
-      <div className="bg-white">
+      <div className="">
         <Navbar />
         <HeroSection />
         <AboutUs />
+        <Team />
         <Features />
-        <Companies />
-        <Prices />
         <CallToAction />
+        <Newsletter />
+        <Prices />
       </div>
       <div className="z-10">
         <Footer />

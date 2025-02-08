@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import SubFooter from './SubFooter'
+import SubFooter from '../SubFooter'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -34,7 +34,6 @@ const Login = () => {
       const res = await axios.post(
         "http://127.0.0.1:8000/api/v1/auth/login/",
         logindata,
-        { withCredentials: true }  // Important for HttpOnly cookies
       );
 
       const response = res.data;

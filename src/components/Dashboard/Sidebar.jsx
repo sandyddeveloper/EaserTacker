@@ -1,22 +1,29 @@
 import { useState, useEffect } from "react";
 import { Home, FileText, CreditCard, PieChart, Square, Layers, Table, Menu, X, LogOut } from "lucide-react";
-import axiosInstance from "../../utils/Store";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/Store";
+
+
+
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const navigate = useNavigate()
-  const handleLogout = async() => {
+  const refresh_token = localStorage.getItem('refresh_token');
+
+  const handleLogout = async () => {
     const res = await axiosInstance.post("/auth/logout/", {"refresh_token": refresh_token})
-    if (res.status === 200) {
-      localStorage.removeItem("access_token")
-      localStorage.removeItem("refresh_token")
-      localStorage.removeItem("user")
-      navigate("/login")
-      toast.success("Logged out successfully!")
-    }
-  }
+      if (res.status === 200) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        navigate("/login");
+      } else {
+        toast.error("Failed to log out");
+      }
+    };
 
 
   useEffect(() => {
