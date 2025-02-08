@@ -9,9 +9,9 @@ const Navbar = () => {
         <header className="absolute inset-x-0 top-0 z-50">
             <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <a href="/" className="-m-1.5 p-1.5">
+                    <button onClick={() => navigate("/")} className="-m-1.5 p-1.5">
                         <img className="h-10 w-auto" src="https://discordbanners.vercel.app/static/img/logo.svg" alt="Logo" />
-                    </a>
+                    </button>
                 </div>
                 <div className="flex lg:hidden">
                     <button
@@ -26,10 +26,20 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className="hidden lg:flex lg:gap-x-12">
-                    {["About", "Features", "Price", "Company"].map((item) => (
-                        <a key={item} href="#" className="text-[17px] font-semibold text-gray-900">
-                            {item}
-                        </a>
+                    {[
+                        { name: "About", path: "/about" },
+                        { name: "Features", path: "/features" },
+                        { name: "Price", path: "/pricing" },
+                        { name: "Company", path: "/company" },
+                        { name: "Docx", path: "/docs" }
+                    ].map((item) => (
+                        <button
+                            key={item.name}
+                            onClick={() => navigate(item.path)}
+                            className="text-[17px] font-semibold text-gray-900"
+                        >
+                            {item.name}
+                        </button>
                     ))}
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -45,10 +55,10 @@ const Navbar = () => {
                     <div className="fixed inset-0 bg-black/50" onClick={() => setIsMobileOpen(false)}></div>
                     <div className="fixed inset-y-0 right-0 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                         <div className="flex items-center justify-between">
-                            <a href="#" className="flex items-center space-x-2 text-lg font-semibold text-black hover:text-yellow-400 transition-all duration-300 p-1.5">
-                            <img className="h-8 w-auto" src="/logo.svg" alt="Logo" />
-                            <span className="text-xl font-bold uppercase">EaserTrack</span>
-                            </a>
+                            <button onClick={() => navigate("/")} className="flex items-center space-x-2 text-lg font-semibold text-black hover:text-yellow-400 transition-all duration-300 p-1.5">
+                                <img className="h-8 w-auto" src="/logo.svg" alt="Logo" />
+                                <span className="text-xl font-bold uppercase">EaserTrack</span>
+                            </button>
 
                             <button onClick={() => setIsMobileOpen(false)} type="button" className="-m-2.5 rounded-md p-2.5 text-gray-700">
                                 <span className="sr-only">Close menu</span>
@@ -60,20 +70,31 @@ const Navbar = () => {
                         <div className="mt-6 flow-root">
                             <div className="-my-6 divide-y divide-gray-500/10">
                                 <div className="space-y-2 py-6">
-                                    {["About", "Features", "Price", "Company"].map((item) => (
-                                        <a
-                                            key={item}
-                                            href="#"
-                                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                                    {[
+                                        { name: "About", path: "/about" },
+                                        { name: "Features", path: "/features" },
+                                        { name: "Price", path: "/pricing" },
+                                        { name: "Company", path: "/company" }
+                                    ].map((item) => (
+                                        <button
+                                            key={item.name}
+                                            onClick={() => {
+                                                navigate(item.path);
+                                                setIsMobileOpen(false);
+                                            }}
+                                            className="-mx-3 block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
                                         >
-                                            {item}
-                                        </a>
+                                            {item.name}
+                                        </button>
                                     ))}
                                 </div>
                                 <div className="py-6">
                                     <button
-                                        onClick={() => navigate('/login')}
-                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                                        onClick={() => {
+                                            navigate('/login');
+                                            setIsMobileOpen(false);
+                                        }}
+                                        className="-mx-3 block w-full text-left rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50"
                                     >
                                         Log in
                                     </button>
