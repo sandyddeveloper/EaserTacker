@@ -1,35 +1,29 @@
 import { Sidebar, Header, Ads, StatsCards, ErrorTable } from "../components/Dashboard";
 import { useEffect, useState } from "react";
-import axiosInstance from "../utils/Store";
+
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/Store";
 
 const Dashboard = () => {
-  
   const navigate = useNavigate();
-
-  // Safe retrieval from localStorage
-  const userData = localStorage.getItem("user");
-  const user = userData ? JSON.parse(userData) : null;
-  const jwt_access = localStorage.getItem("access_token");
-  
+  const user = JSON.parse(localStorage.getItem('user'));
+  const jwt_access = localStorage.getItem("access");
 
   useEffect(() => {
-    if (!jwt_access || !user) {
-      console.warn("🔴 No authentication data found. Redirecting to login.");
+    if (jwt_access === null && !user) {
       navigate("/login");
-    } else {
-      getSomeDate()
+    }else {
+    getSomeDate();
     }
   }, [jwt_access, user]);
-  
-
 
   const getSomeDate = async () => {
-    const resp = await axiosInstance.get("/auth/profile/")
+    const resp = await axiosInstance.get("/auth/profile/");
     if (resp.status === 200) {
-      console.log(resp.data)
+      console.log(resp.data);
     }
   }
+  
 
   return (
     <div className="flex h-screen overflow-hidden">

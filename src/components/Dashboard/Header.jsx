@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { Bot } from "lucide-react";
 import { Sun, Moon, Bell, User, Settings, Search } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-
+  const navigate = useNavigate()
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   const user = JSON.parse(localStorage.getItem('user'))
-  
+  const jwt_access = localStorage.getItem('access');
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
-    }, 1000);
-    return () => clearInterval(timer);
+     if (jwt_access === null && !user) {
+      navigate("/login")
+     }
   }, []);
 
   return (
@@ -38,8 +38,8 @@ const Header = () => {
       
       {/* Timer and Username - Hidden on Mobile */}
       <div className="hidden md:flex items-center space-x-4">
-        <span className="text-sm font-semibold">{time}</span>
-        <span className="text-sm font-semibold">{user.first_name}{user.last_name}</span>
+        <span className="text-sm font-semibold">{user.name}</span>
+        <span className="text-sm font-semibold"></span>
       </div>
 
       {/* Notification - Hidden on Mobile */}
@@ -83,9 +83,9 @@ const Header = () => {
       className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-2"
     >
       <div className="p-3 border-b dark:border-gray-700">
-        <p className="text-sm font-semibold">{user.first_name}{user.last_name}</p>
-        <p className="text-sm font-semibold">{user.role}</p>
-        <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+        <p className="text-sm font-semibold"></p>
+        <p className="text-sm font-semibold"></p>
+        <p className="text-xs text-gray-500 dark:text-gray-400"></p>
       </div>
       <a
         href="#"
